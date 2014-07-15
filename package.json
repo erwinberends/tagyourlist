@@ -1,0 +1,15 @@
+{
+  "name": "tagyourlist",
+  "version": "0.0.1",
+  "description": "Api for uploading CSV files and tag the seperate list items",
+  "main": "server.js",
+  "dependencies": {
+    "connect-multiparty": "^1.1.0",
+    "csv": "^0.4.0",
+    "csv-parse": "0.0.5",
+    "express": "^4.6.1",
+    "mongoose": "^3.8.13"
+  },
+  "author": "Erwin Berends",
+  "license": "MIT"
+}
