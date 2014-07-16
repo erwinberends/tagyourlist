@@ -1,10 +1,28 @@
 var parse = require('csv-parse');
 var fs = require('fs');
+var mongoose = require('mongoose');
 
 var List = function list(columnNames, items){
 	this.columnNames = columnNames;
 	this.items = items;
 }
+
+var listItemSchema = mongoose.Schema({
+	values: [],
+	listId: String
+});
+
+var listMetadataSchema = mongoose.Schema({
+	columnNames: [String]
+});
+
+var listSchema = mongoose.Schema({
+	listMetaDataId: String,
+});
+
+var DbList = mongoose.model('List', listSchema);
+var DbListItem = mongoose.model('ListItem', listItemSchema);
+var DbListMetaData = mongoose.model('ListMetadata', listMetadataSchema);
 
 exports.parseCsv = function(req, res){
 	console.log('Calling parseCsv');
@@ -22,6 +40,9 @@ exports.parseCsv = function(req, res){
 }
 
 exports.save = function(req, res){
-	console.log('Calling save');
+	var dbListMetaData = new DbListMetaData({
+		columnNames: ['Col1', 'Col2']
+	});
+	dbListMetaData.save();
 	res.send('OK');
 }
