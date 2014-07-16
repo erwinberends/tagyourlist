@@ -15,8 +15,8 @@ app.get('/', function(req, res){
 	res.sendfile('client/index.html');
 });
 
-app.post('/upload', multipartMiddleware, function(req, res) {
-    // File uploaed, let's create a stream and parse the data
+app.post('/list/upload', multipartMiddleware, function(req, res) {
+  // File uploaded, let's create a stream and parse the data
 	rs = fs.createReadStream(req.files.datafile.path);
 	parser = parse({columns: true, delimiter: ';'}, function(err, data){
 		// When there's data, let's write it to the browser
