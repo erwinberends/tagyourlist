@@ -2,16 +2,22 @@ var parse = require('csv-parse');
 var fs = require('fs');
 var mongoose = require('mongoose');
 
-var List = function list(columnNames, items, name){
+var List = function list(columnNames, parsedItems, name){
 	this.columnNames = columnNames;
-	this.items = items;
+	var listItems = [];
+	for(var i=0; i<parsedItems.length; i++){
+		var item = {
+			values : parsedItems[0]
+		}
+		listItems.push(item);
+	}
 	this.name = name;
+	this.items = listItems;
 }
 
 var listItemSchema = mongoose.Schema({
-	values: [],
 	listId: String
-});
+}, {strict: false});
 
 var listMetadataSchema = mongoose.Schema({
 	columnNames: [String]
@@ -31,7 +37,7 @@ function saveListItems(listId, req){
 		var item = req.body.items[i];
 		var listItem = new DbListItem({
 			listId: listId,
-			values: req.body.items
+			values: item
 		});
 		listItem.save();
 	}
@@ -60,7 +66,7 @@ function constructList(list, res){
 }
 
 exports.parseCsv = function(req, res){
-	rs = fs.createReadStream(req.files.datafile.path);
+	rs = fs.createReadStream(req.files.file.path);
 	parser = parse({columns: true, delimiter: ';'}, function(err, data){
 
 		// When there's data, let's write it to the browser

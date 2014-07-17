@@ -19,7 +19,7 @@ describe('POST /list/save', function(){
 describe('POST /list/upload', function() {
     it('returns 200, content-type is JSON when a filled csv file is uploaded', function(done) {
         request.post('/list/upload')
-            .attach('datafile', './test/upload.in')
+            .attach('file', './test/upload.in')
             .expect(200, testconfig.uploadResult)
             .end(function(err, res) {
                 should.not.exist(err);

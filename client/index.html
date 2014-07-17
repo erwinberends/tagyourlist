@@ -1,12 +1,22 @@
-<html>
+<!DOCTYPE html>
+<html ng-app="volunteerapp">
 	<head>
-
+		<script src="js/angular.min.js"></script>
+		<script src="js/angular-route.min.js"></script>
+		<script src="js/list.js"></script>
 	</head>
-	<body>
-		<h1>Upload your file</h1>
-		<form action="list/upload" enctype="multipart/form-data" method="post">
-			<input type="file" name="datafile" size="40">
-			<input type="submit" value="Send">
-		</form>
-	</body>
+	<body ng-controller="ListController">
+		<label for="files">Upload your file</label>
+		<input type="file" file-model="myFile"/>
+    	<button ng-click="uploadFile()">Upload</button>
+    	<button ng-click="saveList()">Save</button>
+    	<table>
+    		<tr ><th ng-repeat="columName in list.columnNames">{{columName}}<th></tr>
+    		<tr ng-repeat="item in list.items">
+    			<td ng-repeat="columnName in list.columnNames">
+    				{{item.values[columnName]}}
+    			</td>
+    		</tr>
+    	</table>
+    </body>
 </html>
