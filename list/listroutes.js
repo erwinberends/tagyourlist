@@ -14,4 +14,12 @@ router.post('/list/save', function(req, res){
   	list.save(req, res);
 });
 
+router.get('/list', function(req, res){
+	list.get(req, res);
+});
+
+router.get('/list/:listid', function(req, res){
+	list.getListById(req, res);
+});
+
 module.exports.router = router;

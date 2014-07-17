@@ -27,3 +27,30 @@ describe('POST /list/upload', function() {
             });
     });
 });
+
+var listId = '';
+
+describe ('GET /list', function(){
+    it('returns 200, and contains at least one list', function(done){
+        request.get('/list')
+            .expect(200)
+            .end(function(err, res){
+                should.not.exist(err);
+                res.body.length.should.greaterThan(1);
+                listId = res.body[0]._id;
+                done();
+            });
+    });
+});
+
+describe ('GET /list/:listId', function(){
+    it('returns 200, and all the items of the list', function(done){
+        request.get('/list/' + listId)
+            .expect(200)
+            .end(function(err, res){
+                should.not.exist(err);
+                done();
+            });
+    });
+
+});
