@@ -6,9 +6,7 @@ var List = function list(columnNames, parsedItems, name){
 	this.columnNames = columnNames;
 	var listItems = [];
 	for(var i=0; i<parsedItems.length; i++){
-		var item = {
-			values : parsedItems[0]
-		}
+		var item = parsedItems[i];
 		listItems.push(item);
 	}
 	this.name = name;
@@ -33,11 +31,12 @@ var DbListItem = mongoose.model('ListItem', listItemSchema);
 var DbListMetaData = mongoose.model('ListMetadata', listMetadataSchema);
 
 function saveListItems(listId, req){
-	for(var i=0; i<req.body.items.length; i++){
-		var item = req.body.items[i];
+	var listItems = req.body.items;
+	for(var i=0; i<listItems.length; i++){
+		var item = listItems[i];
 		var listItem = new DbListItem({
 			listId: listId,
-			values: item
+			values: item.values
 		});
 		listItem.save();
 	}
@@ -72,7 +71,14 @@ exports.parseCsv = function(req, res){
 		// When there's data, let's write it to the browser
   		if(data.length > 0){
   			var propertyNames = Object.getOwnPropertyNames(data[0]);
-  			var list = new List(propertyNames, data);
+  			var listItems = []
+  			for(var i=0; i<data.length; i++){
+  				var listItem = {
+  					values: data[i]
+  				}
+  				listItems.push(listItem);
+  			}
+  			var list = new List(propertyNames, listItems);
   			res.send(200, list);
   		}
 	});

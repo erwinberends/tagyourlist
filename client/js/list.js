@@ -33,6 +33,12 @@ listapp.service('fileUpload', ['$http', function ($http) {
 }]);
 
 listapp.controller('ListController', ['$scope', 'fileUpload', '$http', function($scope, fileUpload, $http){
+    $http.get('/list')
+        .success(function(data){
+            $scope.lists = data;
+        });
+
+
     $scope.uploadFile = function(){
         var file = $scope.myFile;
         var uploadUrl = '/list/upload';
@@ -45,4 +51,11 @@ listapp.controller('ListController', ['$scope', 'fileUpload', '$http', function(
         $http.post('/list/save', $scope.list)
         .success(alert('Saved'));
     };
+
+    $scope.selectList = function(listId){
+        $http.get('/list/' + listId)
+            .success(function(data){
+                $scope.list = data;
+            });
+    }
 }]);

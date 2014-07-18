@@ -10,6 +10,14 @@
 		<input type="file" file-model="myFile"/>
     	<button ng-click="uploadFile()">Upload</button>
     	<button ng-click="saveList()">Save</button>
+        <div>
+            <ul>
+                <li ng-repeat="list in lists">
+                    <span ng-click='selectList(list._id)'>{{list.name}}</span>
+                </li>
+            </ul>
+
+        </div>
     	<table>
     		<tr ><th ng-repeat="columName in list.columnNames">{{columName}}<th></tr>
     		<tr ng-repeat="item in list.items">
